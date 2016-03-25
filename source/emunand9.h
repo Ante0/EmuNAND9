@@ -13,7 +13,8 @@
 
 #define SD_SETUP_EMUNAND (1<<0)
 #define SD_SETUP_LEGACY  (1<<1)
-#define SD_USE_STARTER   (1<<2)
+#define SD_SETUP_MINSIZE (1<<2)
+#define SD_USE_STARTER   (1<<3)
 
 #define N_EMUNAND        (1<<0)
 #define N_WREDNAND       (1<<1)
