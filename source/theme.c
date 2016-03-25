@@ -46,7 +46,7 @@ void LoadThemeGfxLogo(void) {
     DrawStringF(LOGO_TEXT_X, LOGO_TEXT_Y - 10, LOGO_TOP, "EmuNAND: %s",
         (emunand_state == RES_EMUNAND_NOT_READY) ? "SD not ready" :
         (emunand_state == RES_EMUNAND_GATEWAY) ? "GW EmuNAND" : 
-        (emunand_state == RES_EMUNAND_GATEWAY) ? "RedNAND" : "SD is ready" );
+        (emunand_state == RES_EMUNAND_REDNAND) ? "RedNAND" : "SD is ready" );
     #ifdef WORK_DIR
     if (DirOpen(WORK_DIR)) {
         DrawStringF(LOGO_TEXT_X, LOGO_TEXT_Y - 20, LOGO_TOP, "Work directory: %s", WORK_DIR);
