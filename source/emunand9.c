@@ -698,40 +698,42 @@ u32 ConvertEmuNand(u32 param)
         Debug("Header read failure");
         return 1;
     }
+    u32 result = 0;
     if (param & N_WREDNAND) { // Gateway EmuNAND -> RedNAND
         for (u32 i = 1; i < nand_sectors; i += SECTORS_PER_READ) {
             u32 read_sectors = min(SECTORS_PER_READ, (nand_sectors - i));
             u32 p = nand_sectors - (i-1) - read_sectors; // need to process this in reverse
             ShowProgress(i, nand_sectors);
-            if ((ReadNandSectors(p, read_sectors, buffer, true) != 0) ||
-                (WriteNandSectors(p, read_sectors, buffer, WR_EMUNAND_REDNAND) != 0)) {
+            if ((sdmmc_sdcard_readsectors(p, read_sectors, buffer) != 0) ||
+                (sdmmc_sdcard_writesectors(p + 1, read_sectors, buffer) != 0)) {
                 Debug("SD card i/o failure");
-                return 1;
+                result = 1;
+                break;
             }
         }
         if (WriteNandSectors(0, 1, header, WR_EMUNAND_REDNAND) != 0) {
             Debug("Header write failure");
-            return 1;
+            result = 1;
         }
     } else { // RedNAND -> Gateway EmuNAND
         for (u32 i = 1; i < nand_sectors; i += SECTORS_PER_READ) {
             u32 read_sectors = min(SECTORS_PER_READ, (nand_sectors - i));
             ShowProgress(i, nand_sectors);
-            if ((ReadNandSectors(i, read_sectors, buffer, true) != 0) ||
-                (WriteNandSectors(i, read_sectors, buffer, WR_EMUNAND_GATEWAY) != 0)) {
+            if ((sdmmc_sdcard_readsectors(i + 1, read_sectors, buffer) != 0) ||
+                (sdmmc_sdcard_writesectors(i, read_sectors, buffer) != 0)) {
                 Debug("SD card i/o failure");
-                return 1;
+                result = 1;
             }
         }
         if (WriteNandSectors(0, 1, header, WR_EMUNAND_GATEWAY) != 0) {
             Debug("Header write failure");
-            return 1;
+            result = 1;
         }
     }
     ShowProgress(0, 0);
     
     
-    return 0;
+    return result;
 }
 
 u32 CompleteSetupEmuNand(u32 param)
