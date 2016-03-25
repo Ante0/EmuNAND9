@@ -741,5 +741,5 @@ u32 CompleteSetupEmuNand(u32 param)
     u32 res = FormatSdCard(SD_SETUP_EMUNAND | SD_USE_STARTER | param);
     if (res != 0) return res;
     Debug("");
-    return InjectNand(N_EMUNAND | N_DIRECTCOPY | N_NOCONFIRM);
+    return InjectNand(N_EMUNAND | N_DIRECTCOPY | N_NOCONFIRM | param);
 }

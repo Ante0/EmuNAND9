@@ -18,7 +18,7 @@ MenuInfo menu[] =
         #endif
         {
             { "Complete EmuNAND Setup",       &CompleteSetupEmuNand,  0 },
-            { "Complete RedNAND Setup",       &CompleteSetupEmuNand,  SD_SETUP_MINSIZE },
+            { "Complete RedNAND Setup",       &CompleteSetupEmuNand,  SD_SETUP_MINSIZE | N_WREDNAND },
             { "SD Format Options...",         NULL,                   SUBMENU_START + 0 },
             { "EmuNAND Manager Options...",   NULL,                   SUBMENU_START + 1 }
         }
